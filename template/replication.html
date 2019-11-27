@@ -1,0 +1,36 @@
+{% load i18n %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans "DB 이중화 현황" %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/dht/build/production/dht/resources/dht-all.css" />
+    <link rel="stylesheet" type="text/css" href="/static/dht/build/production/dht/resources/dht-all_1.css" />
+    <link rel="stylesheet" type="text/css" href="/static/dht/build/production/dht/resources/dht-all_2.css" />
+    <link rel="stylesheet" type="text/css" href="/static/dht/build/production/dht/resources/dht-all_3.css" />
+    <link rel="stylesheet" type="text/css" href="/static/dht/resources/fonts/font-mfizz-2.2/font-mfizz.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/dht/resources/css/joint.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/dht/resources/js/jointjs/joint.min.css"/>
+    <script src="/static/dht/resources/js/jquery-2.1.4.min.js"></script>
+    <script src="/static/dht/resources/js/jointjs/lib/lodash/index.js"></script>
+    <script src="/static/dht/resources/js/jointjs/lib/backbone/backbone.js"></script>
+    <script src="/static/dht/resources/js/jointjs/joint.min.js"></script>
+    <script src='/static/dht/resources/js/ext-all.js'></script>
+    <script src='/static/dht/classic/src/view/setting/replication/ReplicationController.js'></script>
+    <script src='/static/dht/classic/src/view/setting/replication/ReplicationModel.js'></script>
+    <script src='/static/dht/classic/src/view/setting/replication/Replication.js'></script>
+    <script>
+        Ext.onReady(function(){
+            Ext.create('Ext.Viewport',{
+                items:[{
+                    title:'{% trans "DB 이중화 현황" %}',
+                    xtype:'replication'
+                }]
+            });
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

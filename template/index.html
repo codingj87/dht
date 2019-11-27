@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>DHT</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="zen, zensystems, zensystems.co.kr, bigdata, pci, admin">
+    <meta name="author" content="zenssytems">
+    <meta name="keyword" content="zen, zensystems, zensystems.co.kr, bigdata, pci, admin">
+
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.ico"/>
+
+    <link rel="stylesheet" href="/static/dht/resources/js/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/dht/resources/js/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/dht/resources/css/login/elegant-icons-style.css"/>
+    <link rel="stylesheet" href="/static/dht/resources/css/login/style.css">
+    <link rel="stylesheet" href="/static/dht/resources/css/login/style-responsive.css"/>
+    <link rel="stylesheet" href="/static/dht/resources/css/login/loginform.css"/>
+    <link rel="stylesheet" href="/static/dht/resources/css/login/loginstyle.css"/>
+    <link rel="stylesheet" href="/static/dht/resources/css/animate.css/animate.css"/>
+
+    <link rel="stylesheet" href="/static/dht/resources/font-awesome/css/font-awesome.min.css"/>
+
+    <script type="text/javascript" src="/static/dht/resources/js/CryptoJS/rollups/sha512.js"></script>
+    <script type="text/javascript" src="/static/dht/resources/js/CryptoJS/rollups/md5.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
+
+    <script type="text/javascript" src="/static/dht/resources/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/dht/resources/js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/dht/resources/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/static/dht/classic/src/view/common/Application.js"></script>
+
+
+    <!--검증중 화면전환효과-->
+    <meta http-equiv="Page-Enter" content="blendTrans(Duration=2)">
+    <meta http-equiv="Page-Enter" CONTENT="RevealTrans(Duration=1, Transition=24)">
+
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#forgot').hide();
+            $('html').hide().fadeIn(700);
+            $('#login-frame').hide().fadeIn(1500);
+            $('#successModal').on('hidden', function () {
+                if (!$("#userid_raw").val()) {
+                    $("#userid_raw").focus();
+                } else {
+                    $("#passwd_raw").val('');
+                    $("#passwd_raw").focus();
+                }
+            });
+            $("#userid_raw").keypress(function (key) {
+                if (key.keyCode == 13) {
+                    login();
+                }
+            });
+            $("#passwd_raw").keypress(function (key) {
+                if (key.keyCode == 13) {
+                    login();
+                }
+            });
+        });
+
+        function alertshow(message) {
+            $('successMessage').text(message);
+            $('#alert-form-message').text(message);
+            $('#successModal').modal();
+            setTimeout(function () {
+                $("#okButton").focus();
+            }, 300);
+        }
+
+        function login() {
+            var csrf = $('#csrfmiddlewaretoken1').val(),
+                _userid_raw = $('#userid_raw');
+
+            if (!_userid_raw.val()) {
+                alertshow('사용자 ID를 입력하세요.');
+                $("#userid_raw").focus();
+                return false;
+            }
+            if (!_userid_raw.val()) {
+                alertshow('암호를 입력하세요.');
+                $("#passwd_raw").focus();
+                return false;
+            }
+
+            var userid = _userid_raw.val(),
+                passwd = CryptoJS.SHA512($('#passwd_raw').val()).toString();
+
+            $.ajax(
+                {
+                    url: 'login',
+                    type: "POST",
+                    data: {
+                        userid: userid,
+                        passwd: passwd,
+                        csrfmiddlewaretoken: csrf
+                    },
+                    success: function(data) {
+                        if(data.success) {
+                            $('html').fadeOut();
+                            location.href = data.url;
+                        } else if(data.success === false) {
+                            alertshow(data.msg);
+                        } else {
+                            alertshow('서버와 네트워크 상태 이상 (code:errLogin:a)' + data);
+                        }
+                        $("#okButton").focus();
+                        return false;
+                    },
+                    error: function() {
+                        alertshow('서버와 네트워크 상태 이상 (code:errLogin:b');
+                    }
+                });
+        }
+
+
+        function closeModal() {
+            $("#signUpForm")[0].reset();
+            $('#signUpModal').modal('hide');
+        }
+
+        $(document).ready(function () {
+            $('#successModal').on('hidden', function () {
+                if(!$("#userID").val()){$("#userID").focus();return;}
+                if(!$("#passwd").val()){$("#passwd").focus();return;}
+                if(!$("#passwd2").val()){$("#passwd2").focus();return;}
+                if(!$("#name").val()){$("#name").focus();return;}
+                if(!$("#phone").val()){$("#phone").focus();return;}
+                if(!$("#email").val()){$("#email").focus();return;}
+                if(!$("#depart").val()){$("#depart").focus();return;}
+                if(!$("#desc").val()){$("#desc").focus();return;}
+            })
+        });
+
+        function joinOnKeyDown(type){
+            var keyCode = event.keyCode;
+            if( keyCode == 13){
+                if (type == 'checkSMS') {
+                    checkSMS();
+
+                } else {
+                    join();
+                }
+            }
+        }
+
+        function loginOnKeyDown(){
+            var keyCode = event.keyCode;
+            if(keyCode == 13) {
+                login();
+            }
+        }
+
+        var PASSWD_LENGTH = '{{ passwd_length }}';
+        var PASSWD_ALPHA = '{{ passwd_alpha }}';
+        var PASSWD_NUMBER = '{{ passwd_number }}';
+        var PASSWD_SPECIAL = '{{ passwd_special }}';
+
+        $(document).ready(function () {
+            $('#successModal2').on('hidden', function () {
+                if(!$("#userID").val()){$("#userID").focus();return;}
+                if(!$("#email").val()){$("#email").focus();return;}
+            })
+        });
+
+        function modalShow(message) {
+            $('#alert-form-message2').text(message);
+            $('#successModal2').modal()
+        }
+
+        function join(){
+            var csrf = $('#csrfmiddlewaretoken2').val(),
+                userID = $("#userID2").val(),
+                email = $("#email2").val();
+
+            if(!userID) {modalShow('사용자 ID를 입력하세요.'); return false;}
+            if(!email) {modalShow('이메일을 입력하세요.'); return false;}
+
+            $.ajax({
+                url: '/password/find',
+                type: "POST",
+                data: {
+                    userID: userID,
+                    email: email,
+                    csrfmiddlewaretoken: csrf
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if(data.success) {
+                        $('#finishModal2').modal();
+                        //closeWindow();
+                    } else {
+                        modalShow('입력하신 ID와 이메일 정보가 일치하지 않습니다.');
+                        return false;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    modalShow('서버와 네트워크 상태 이상');
+                }
+            });
+        }
+
+        function closePass() {
+            $("#passwordForm")[0].reset();
+            $('#passwordModal').modal('hide');
+            $('#check_sms').modal('hide');
+
+        }
+
+        function addZeros(num, digit) {
+            var zero = '';
+            num = num.toString();
+            if (num.length < digit) {
+                for( var i = 0; i< digit - num.length; i++) {
+                    zero += '0';
+                }
+            }
+            return zero + num;
+
+        }
+
+        function getNum() {
+            var num = Math.floor(Math.random() * 999999);
+            $("#auth_num").val(addZeros(num, 6));
+        }
+
+    </script>
+</head>
+<body class="login-body">
+<div class="login-main">
+    <div class="logo-text">
+        <div class="index-title animated flipInX" style="margin:0 0 40px;">DHT Management</div>
+    </div>
+    <form id="login-form" class="login-form" method="POST">
+        <input type="hidden" id="csrfmiddlewaretoken1" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input type="hidden" id="userid1" name="userid" value="">
+        <input type="hidden" id="passwd1" name="passwd" value="">
+        <div class="index-title"><span style="color: #E4221E;">DHT</span> Login</div>
+        <table class="login-form-table">
+            <tr>
+                <td>
+                    <input type="text" id="userid_raw" name="userid_raw" class="form-control form-control1" tabindex="1" autofocus placeholder="아이디" onKeyDown="loginOnKeyDown();">
+                </td>
+                <td rowspan="2">
+                    <button type="button" class="login-btn-submit" onclick="login();return false;" tabindex="4">로그인</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="password" id="passwd_raw" name="passwd_raw" class="form-control form-control1" tabindex="2" placeholder="비밀번호" onKeyDown="loginOnKeyDown();">
+                </td>
+            </tr>
+        </table>
+        <div class="index-apply">
+            <span style="color: #E4221E;">DHT</span> Login ID가 없으십니까? 지금
+            <a data-toggle="modal" data-target="#signUpModal" style="color: #E4221E; font-weight: 700" role="button">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                생성
+            </a>
+            하세요.
+
+        </div>
+    </form>
+    <div class="login-label">
+        <span>본 사이트는 Internet Explore 11이상, Chrome, Firefox에 최적화 되어 있습니다.</span>
+    </div>
+    <div class="copyright">Copyright 2019 zensystems corp. All right reserved.</div>
+</div>
+
+<!-- Modal -->
+<div id="signUpModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="margin-bottom: 3%;">
+                <button type="button" class="close" onclick="closeModal();">&times;</button>
+                <h1 class="modal-title sign-title"><b><span style="color: black;"></span>DHT</b></h1>
+            </div>
+            <div class="modal-body">
+                <form id="signUpForm">
+                    <input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="hidden" id="salt" name="salt" value="{{ salt }}">
+                    <input type="hidden" id="admin" name="admin" value=1>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="userID" name="userID" type="text" class="required form-control control-size-sign" placeholder="아이디" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="passwd" name="passwd" type="password" class="required form-control control-size-sign" placeholder="비밀번호" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="passwd2" name="passwd2" type="password" class="required form-control control-size-sign" placeholder="비밀번호 재확인" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="name" name="name" type="text" class="required form-control control-size-sign" placeholder="사용자 이름" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="phone" name="phone" type="tel" class="required form-control control-size-sign" placeholder="휴대전화" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="depart" name="depart" type="text" class="required form-control control-size-sign" placeholder="부서" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="desc" name="desc" type="text" class="required form-control control-size-sign" placeholder="신청사유" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id=email name="email" type="email" class="required form-control control-size-sign" placeholder="이메일" onKeyDown="joinOnKeyDown();">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix btn-sign-padding">
+                        <button type="button"
+                                onclick="apply();"
+                                class="btn btn-sign-size">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            가입하기
+                        </button>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-sign-size-close" onclick="closeModal();">닫기</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+
+<!-- Modal -->
+<div id="passwordModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="margin-bottom: 3%;">
+                <button type="button" class="close" onclick="closeModal();">&times;</button>
+                <h1 class="modal-title sign-title"><b><span style="color:black";>DHCP</span></b></h1>
+            </div>
+            <div class="modal-body">
+                <form id="passwordForm">
+                    <input type="hidden" id="csrfmiddlewaretoken2" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <input type="hidden" id="salt2" name="salt" value="{{ salt }}">
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id="userID2" name="userID" type="text" class="required form-control control-size-sign" placeholder="아이디" onKeyDown="joinOnKeyDown('password');">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group clearfix">
+                        <div class="col-md-12 sign-form-size">
+                            <input id=email2 name="email" type="email" class="required form-control control-size-sign" placeholder="이메일" onKeyDown="joinOnKeyDown('password');">
+                        </div>
+                    </div>
+                    <div class="form-group clearfix btn-sign-padding">
+                        <button type="button"
+                                onclick="join();"
+                                class="btn btn-sign-size">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            요청
+                        </button>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-sign-size-close" onclick="closePass();">닫기</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<!--End Modal-->
+<!--<div id="check_sms" class="modal fade" role="dialog">-->
+<!--<div class="modal-dialog">-->
+<!--&lt;!&ndash; Modal content&ndash;&gt;-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header" style="margin-bottom: 3%;">-->
+<!--<button type="button" class="close" onclick="closeModal();">&times;</button>-->
+<!--<h1 class="modal-title sign-title"><b>KT DHCP <span style="color:black";>2차 인증</span></b></h1>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+<!--<form id="check_sms_form">-->
+<!--<input type="hidden" id="csrfmiddlewaretoken4" name="csrfmiddlewaretoken" value="{{ csrf_token }}">-->
+<!--<input type="hidden" id="salt4" name="salt" value="{{ salt }}">-->
+<!--<div class="form-group clearfix">-->
+<!--<div class="col-md-9 sign-form-size">-->
+<!--<input id="phone1" name="phone" type="tel" class="required form-control control-size-sign" placeholder="휴대전화 번호를 입력하세요." onKeyDown="joinOnKeyDown('checkSMS');">-->
+<!--</div>-->
+<!--<div class="col-md-3 sign-form-size" style="padding-left: 0px;">-->
+<!--<button id="get_num" name="get_num" type="button" class="required form-control control-size-sign-btn" onclick="getNum();">인증번호 받기</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group clearfix">-->
+<!--<div class="col-md-12 sign-form-size">-->
+<!--<input id=auth_num name="auth_num" type="text" class="required form-control control-size-sign" placeholder="문자로 전송된 인증 번호를 입력하세요." onKeyDown="joinOnKeyDown('checkSMS');">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group clearfix btn-sign-padding">-->
+<!--<button type="button"-->
+<!--onclick="checkSMS();"-->
+<!--class="btn btn-sign-size">-->
+<!--<i class="fa fa-check" aria-hidden="true"></i>-->
+<!--인증-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="form-group clearfix">-->
+<!--<div class="col-md-12">-->
+<!--<button type="button" class="btn btn-sign-size-close" onclick="closePass();">닫기</button>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!-- Modal -->
+<div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="successModalLabel">알림</h4>
+            </div>
+            <div class="modal-body">
+                계정 발급 신청이 완료 되었습니다. 관리자 승인 후 로그인이 가능합니다.
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" onclick="closeModal();return false;" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--modal popup-->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true" style="overflow: hidden">
+    <div class="join-form">
+        <div class="row" style="margin: 0px">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="row">
+                    <div class="join-header-dark">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 join-header-title text-center">알람</div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="join-body-small">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div id="alert-form-message" class="form-group"></div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="join-footer-dark">
+                        <div class="text-center">
+                            <button id="okButton" type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="finishModal2" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="successModalLabel2">알림</h4>
+            </div>
+            <div class="modal-body">
+                임시 비밀번호를 전송 했습니다.
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="successModal2" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true" style="overflow: hidden">
+    <div class="join-form">
+        <div class="row" style="margin: 0px">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="row">
+                    <div class="join-header-dark">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 join-header-title text-center">알람</div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="join-body-small">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div id="alert-form-message2" class="form-group"></div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="join-footer-dark">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

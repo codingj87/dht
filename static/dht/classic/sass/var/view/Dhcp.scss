@@ -1,0 +1,37 @@
+@mixin button-style() {
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.x-tab-bar-default-top > .x-tab-bar-body-default{
+  padding: 0 0 5px 0 !important;
+}
+
+.x-grid-cell {
+  vertical-align: middle !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.button-excel{
+  background-color: white !important;
+}
+
+.x-treelist-navigation .x-treelist-item-text {
+  font-size: 16px !important;
+}
+
+.hide-row {
+  display: none;
+  height: 0 !important;
+  width: 0 !important;
+}
+//.x-btn-icon-el-default-small {
+//  @include button-style();
+//}
+//
+//.x-btn-inner-default-small {
+//  @include button-style();
+//}

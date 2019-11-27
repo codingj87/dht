@@ -1,0 +1,97 @@
+$base-color: white;
+//$font-family: 'DroidSans';
+
+// panel
+$panel-base-color: transparent; // 배경색
+$panel-header-color: rgb(100, 100, 100); // 헤더 색
+$panel-header-background-color: white; //헤더 배경색
+$panel-header-font-weight: bold; // 헤더 글꼴 굵기
+$panel-header-padding: 10px 20px 10px; // 안쪽 여백
+$panel-border-width: 1px; // 테두리굵기
+$panel-border-color: rgba(100, 100, 100, 0.5); // 테두리색
+
+$accordion-background-color: #F5F5F5; // 아코디언UI 배경 색
+$accordion-tool-glyph-color: #646464; // 아코디언UI 툴 색
+
+//// tab
+// 기본
+$tab-font-weight: normal; // 글자굵기
+$tab-color: #646464; // 글자색
+$tab-base-color: rgba(100, 100, 100, 0.1); // 배경색
+$tab-border-width: 1px; // 테두리굵기
+$tab-border-color: rgba(100, 100, 100, 0.1); // 테두리색
+//// 활성화 탭
+$tab-font-weight-active: bold; // 글자굵기
+$tab-color-active: white; // 글자색
+$tab-base-color-active: rgb(222, 32, 39); // 배경색
+
+// grid
+// 헤드
+$grid-header-padding: 7px 2px 7px 2px;
+$grid-header-background-color: #f5f5f5; // 배경색
+$grid-column-header-font-weight: bold; // 글자굵기
+$grid-column-header-font-size: 14px; // 글자크기
+$grid-cell-text-field-focus-border-color: #F5F5F5; // 선택된 셀 테두리 색
+// 셀
+
+// button
+$button-default-color: #646464;
+
+// tree
+$tree-arrow-expanded-glyph-color: #646464; // ??
+$tree-arrow-glyph-color: #646464; // ??
+$tree-checkbox-glyph-color: #646464; // ??
+$tree-collapse-glyph-color: #646464; // 접기색
+$tree-expand-glyph-color: #646464; // 펼치기색
+$tree-folder-glyph-color: #646464; // ??
+$tree-folder-open-glyph-color: #646464; // ??
+$tree-glyph-color: #646464; // 아이템 아이콘색
+$tree-leaf-glyph-color: #646464; // 하위아이템 아이콘색
+.x-tree-checkbox {
+  color: #646464 !important;
+}
+
+// 하위아이템 체크박스
+
+// combobox
+$boundlist-item-over-background-color: rgba(77, 143, 187, 0.1); // 아이템 오버 배경색
+$boundlist-item-over-text-color: black; // 아이템 오버 글자색
+$boundlist-item-selected-background-color: rgba(77, 143, 187, 0.1); // 아이템 선택 배경색
+$boundlist-item-selected-text-color: black; // 아이템 선택 글자색
+
+// tool, window
+$tool-glyph-color: #646464; // 윈도우 툴즈 색
+$window-header-background-color: #ececec; //윈도우 헤더 색
+
+// fieldset
+$fieldset-header-font-weight: bold; // 제목 굵기
+
+//$accordion-header-background-color: $lightest-color;
+$accordion-header-color: #333;
+
+// checkbox
+$form-checkbox-glyph-color: #646464; // ??
+$form-checkbox-glyph-focus-color: #646464; // ??
+$form-checkbox-label-color: #646464; // ??
+
+// menu
+$menu-item-active-text-color: black; // 아이템 오버 글자색
+
+//?
+$social-facebook-btn-background: #167abc;
+$social-twitter-btn-background: #03b4d5;
+$social-google-plus-btn-background: #e44959;
+$social-envelope-btn-background: #7754aa;
+
+// ?
+$circle-border-radius: 50%;
+$base-border-color: #ddd;
+$lightest-color: #fff;
+$font-weight: 400;
+$font-weight-bold: 500;
+
+//datepicker
+$datepicker-item-selected-background-color: #404040; //선탯된 배경색
+
+// text
+$form-field-padding: 0px 2px 0px;

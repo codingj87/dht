@@ -1,0 +1,31 @@
+[
+  {
+    "pk": 1,
+    "model": "control.group",
+    "fields": {
+      "pid": 0,
+      "name": "ALL",
+      "desc": "ALL",
+      "ctime": 0,
+      "mtime": 0
+    }
+  },
+  {
+    "pk": 1,
+    "model": "control.user",
+    "fields": {
+      "group": 1,
+      "userid": "masteradmin",
+      "passwd": "ca1bcf76bece3e4a5d7eea3822ddfd5e0fa740f67bcde3ea7084b47cc4b8a3a25254dc286d7fa588d8bc94e051ef4ddf4d3b01c169e18a6b1f4a72f8a6f08a1f",
+      "level": 1,
+      "name": "관리자",
+      "email": "",
+      "phone": "",
+      "desc": "",
+      "ctime": 0,
+      "mtime": 0,
+      "list_count": 25,
+      "use_help": 1
+    }
+  }
+]

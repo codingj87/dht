@@ -1,0 +1,406 @@
+// 좌측메뉴
+@include treelist-ui(
+        $ui: 'navigation',
+        $padding: 0px,
+          // Black-ish background color
+        //$background-color: $panel-navigation-background-color,
+        $background-color: #222,
+        $toolstrip-background-color: #222, // 접혔을 때 배경색
+
+        $tool-float-indicator-color: $panel-header-background-color,
+        $tool-float-indicator-width: 5px,
+        $tool-indicator-selected-color: $panel-header-background-color,
+        $tool-indicator-selected-width: 5px,
+        $tool-selected-background-color: rgba(77, 143, 187, 0.4), // 접혀진 상태 선택메뉴 배경
+          //$tool-selected-color: #fff,
+          //$tool-selected-background-color: $panel-header-background-color,
+
+          // Darker background for expanded subtrees
+          //$item-expanded-background-color: #555, // 펼쳐진 상태 선택 서브메뉴 배경색 (부모노드 포함)
+        $item-expanded-child-background-color: #343434, // 펼쳐진 상태 선택 시 서브메뉴 배경색 (부모노드 미포함)
+
+          // Taller line height
+        $item-line-height: $panel-navigation-item-line-height,
+        $row-over-background-color: rgba(77, 143, 187, 0.1), // 좌측 메뉴 마우스오버 배경색
+        $row-selected-background-color: rgba(77, 143, 187, 0.4), // 좌측 메뉴 선택시 배경색
+
+          // Off-white text
+        $item-icon-color: $panel-navigation-item-text-color,
+        $item-expander-color: #fff,
+        $item-text-color: white,
+          // Brighter when hovered
+        $item-icon-over-color: #fff,
+        $item-expander-over-color: #fff,
+        $item-text-over-color: mix(white, $panel-navigation-item-text-color, 50%),
+        $item-text-font-size: 14px, // 좌측 메뉴 폰트크기
+
+          // Various sizes for the pieces:
+        $item-icon-font-size: 18px, // 좌측 메뉴 아이콘크기
+        $item-icon-width: 44px,
+        $item-expander-font-size: 16px,
+        $item-expander-width: 24px,
+          // Style the "row indicator" (the vertical stripe on the left edge):
+        $row-indicator-width: 5px,
+        $row-indicator-selected-color: $panel-header-background-color,
+        $row-indicator-selected-over-color: lighten($panel-header-background-color, 7%),
+        $row-indicator-over-color: transparent
+);
+
+//--------------------------------------------------------
+// Create classes for full-size responsive items
+
+.big-100 {
+  @include responsivecolumn-item(100%);
+}
+
+.big-60 {
+  @include responsivecolumn-item(60%);
+}
+
+.big-50 {
+  @include responsivecolumn-item(50%);
+}
+
+.big-40 {
+  @include responsivecolumn-item(40%);
+}
+
+.big-33 {
+  @include responsivecolumn-item(33.33%);
+}
+
+.big-20 {
+  @include responsivecolumn-item(20%);
+}
+
+//--------------------------------------------------------
+// And classes for small-size responsive items
+
+.x-responsivecolumn-small {
+  > .small-100 {
+    @include responsivecolumn-item(100%);
+  }
+
+  > .small-50 {
+    @include responsivecolumn-item(50%);
+  }
+}
+
+//--------------------------------------------------------
+//olleh
+//@font-face {
+//    font-family: 'DroidSans';
+//    src: url('/static/ixmas/resources/fonts/DroidSans.ttf') format('truetype');
+//}
+//* {
+//    font-family: 'DroidSans';
+//}
+//--------------------------------------------------------
+
+.sencha-logo {
+  background-color: white;
+  height: 54px; // main-header 높이
+
+  font-size: 16px;
+  color: $lightest-color;
+  margin-left: 17px;
+  top: 0px;
+
+  .main-logo {
+    line-height: 50px; // main-header 높이
+    img {
+      margin-left: 22px;
+      margin-right: 22px;
+      top: 0px;
+      position: relative;
+    }
+  }
+}
+
+.sencha-dash-dash-headerbar {
+  background-color: white;
+  padding: 0 30px 0 0;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  border-width: 0px 0px 3px 0px !important;
+  border-color: rgb(222, 32, 39);
+  .header-right-profile-image {
+    border-radius: 20px;
+  }
+}
+
+.top-english-button {
+  .x-btn-icon-el {
+    width: 21px;
+    height: 14px;
+  }
+}
+
+.collapsed {
+  .hot-icon, .new-icon {
+    &:after {
+      display: none;
+    }
+  }
+  .x-tree-elbow-img {
+    display: none;
+  }
+
+  .x-tree-node-text {
+    display: none;
+  }
+}
+
+.x-grid-cell {
+  position: relative;
+}
+
+.hot-icon, .new-icon {
+  &.hot-icon:after {
+    content: "HOT";
+    background: #e3495a;
+  }
+  &.new-icon:after {
+    content: "NEW";
+    background: $base-color;
+  }
+  &:after {
+    height: 18px;
+    width: 34px;
+    display: inline-block;
+    position: absolute;
+    top: 22px;
+    right: -180px;
+    text-align: center;
+    color: $lightest-color;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 18px;
+  }
+}
+
+.x-treelist-item-tool {
+  height: $panel-navigation-item-line-height;
+  &.hot-icon:after, &.new-icon:after {
+    background: $panel-header-background-color;
+    content: '';
+  }
+}
+
+// grid grouping
+.blueGrouping .x-grid-group-hd {
+  background: #5379af;
+}
+.blueGrouping .x-grid-group-title {
+    color: white;
+}
+
+
+//.toolbar-btn-shadow{
+//    @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+//    .x-btn-over{
+//        background-color: $button-toolbar-hover-background-color;
+//    }
+//}
+
+//Add border around html editor field
+.x-html-editor-input {
+  border: 1px solid #ccc;
+}
+
+//UI Styles for buttons
+@include extjs-button-small-ui(
+        $ui: 'soft-blue',
+        $background-color: $color-soft-blue,
+        $border-color: darken($color-soft-blue, 5%)
+);
+@include extjs-button-large-ui(
+        $ui: 'soft-blue',
+        $line-height: 34px,
+        $background-color: $color-soft-blue,
+        $border-color: darken($color-soft-blue, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'soft-blue',
+        $background-color: $color-soft-blue,
+        $border-color: darken($color-soft-blue, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'facebook',
+        $background-color: $social-facebook-btn-background,
+        $border-color: darken($social-facebook-btn-background, 5%)
+);
+@include extjs-button-large-ui(
+        $ui: 'facebook',
+        $line-height: 34px,
+        $background-color: $social-facebook-btn-background,
+        $border-color: darken($social-facebook-btn-background, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'soft-cyan',
+        $background-color: $color-soft-cyan,
+        $border-color: darken($color-soft-cyan, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'soft-cyan',
+        $background-color: $color-soft-cyan,
+        $border-color: darken($color-soft-cyan, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'soft-green',
+        $background-color: $color-soft-green,
+        $border-color: darken($color-soft-green, 5%)
+);
+@include extjs-button-large-ui(
+        $ui: 'soft-green',
+        $line-height: 34px,
+        $background-color: $color-soft-green,
+        $border-color: darken($color-soft-green, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'soft-green',
+        $background-color: $color-soft-green,
+        $border-color: darken($color-soft-green, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'soft-red',
+        $background-color: $color-soft-red,
+        $border-color: darken($color-soft-red, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'soft-red',
+        $background-color: $color-soft-red,
+        $border-color: darken($color-soft-red, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'soft-purple',
+        $background-color: $color-soft-purple,
+        $border-color: darken($color-soft-purple, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'soft-purple',
+        $background-color: $color-soft-purple,
+        $border-color: darken($color-soft-purple, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'gray',
+        $background-color: $color-gray,
+        $border-color: darken($color-gray, 5%)
+);
+@include extjs-button-large-ui(
+        $ui: 'gray',
+        $line-height: 34px,
+        $background-color: $color-gray,
+        $border-color: darken($color-gray, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'gray',
+        $background-color: $color-gray,
+        $border-color: darken($color-gray, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'green',
+        $background-color: $color-green,
+        $border-color: darken($color-green, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'green',
+        $background-color: $color-green,
+        $border-color: darken($color-green, 5%)
+);
+
+@include extjs-button-small-ui(
+        $ui: 'blue',
+        $background-color: $color-blue,
+        $border-color: darken($color-blue, 5%)
+);
+@include extjs-button-toolbar-small-ui(
+        $ui: 'blue',
+        $background-color: $color-blue,
+        $border-color: darken($color-blue, 5%)
+);
+
+// 헤더 버튼 컬러
+@include extjs-button-small-ui(
+        $ui: 'header',
+        $color: #999,
+        $glyph-color: #646464,
+        $background-color: transparent,
+        $border-width: 0
+);
+
+// 탭 - 메뉴
+@include extjs-tab-panel-ui(
+        $ui: 'menutab',
+          //기본
+          //$ui-bar-background-color: #ED1921,
+
+          //$ui-tab-font-weight: normal, // 글자굵기
+        $ui-tab-color: #555555, // 글자색
+        $ui-tab-background-color: rgba(100, 100, 100, 0.1), // 배경색
+        $ui-tab-border-width: 1px 1px 1px 1px, // 테두리굵기
+          //$ui-tab-border-color: rgba(100, 100, 100, 0.4), // 테두리색
+          //활성화 탭
+        $ui-tab-font-weight-active: bold, // 글자굵기
+        $ui-tab-color-active: #ED1921, // 글자색
+        $ui-tab-background-color-active: white, // 배경색
+        $ui-tab-border-color-active: #ED1921 // 테두리색
+);
+@include extjs-panel-ui(
+        $ui: 'menupanel',
+          //기본
+        $ui-border-width: 5px 0px 0px 0px, // 테두리굵기
+        $ui-border-color: #ED1921
+);
+
+// panel
+@include extjs-panel-ui(
+        $ui: 'redheadPanel',
+        $ui-header-color: white, // 헤더 글자 색
+        $ui-header-background-color: rgb(222, 32, 39), // 헤더 배경 색
+        $ui-border-color: rgb(222, 32, 39) // 테두리 색
+);
+@include extjs-panel-ui(
+        $ui: 'blueheadPanel',
+        $ui-header-color: white, // 헤더 글자 색
+        $ui-header-background-color: #5379AF, // 헤더 배경 색
+        $ui-border-color: #5379AF // 테두리 색
+);
+@include extjs-panel-ui(
+        $ui: 'resourcePanel',
+        $ui-header-padding: 0 5px 0 // 헤더 배경 색
+);
+// grid grouping
+.resourcePanel .x-title-align-left {
+    text-align: center;
+    font-size: 14px;
+}
+
+// fieldset
+.x-fieldset .x-fieldset-header {
+    padding: 0px 5px 0px 5px;
+}
+
+// button
+@include extjs-button-small-ui(
+        $ui: 'searchButton',
+
+        $color: white,
+        $font-weight: bold,
+        $glyph-color: white,
+        $border-color: #646464,
+        $background-color: #646464
+);
+
+// column sort highlight
+.columnHighlight {
+    font-size: 18px;
+}
